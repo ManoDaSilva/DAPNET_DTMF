@@ -12,6 +12,7 @@ You can send messages via DTMF by dialing:
 #RIC*MessageNr#
 ```
 You can set up to 90 canned messages. 91 to 99 have been blocked for "special" messages. So far, those have been implemented:
+* 97: Restart Unipager (although I'd change it to something else, to keep people from always restarting unipager...)
 * 98: Unipager status (server, callsign, connection status)
 * 99: System status (CPU temp, IP Address)
 
