@@ -8,7 +8,7 @@ import time
 import json
 from urllib.request import urlopen
 
-
+##Canned messages, numbered from 0 to 89
 cannedMsg = [
     "Test de Couverture",
     "R0 B-EARS. RDV sur Relais ou 145.500MHz",
@@ -17,6 +17,10 @@ cannedMsg = [
     "Canned msg 4",
     "Canned msg 5",
 ]
+
+##For fast RIC dialing, if you type 0, it'll default to this one.
+defaultRic = 2065009
+
 def sendToUnipager(ric, text, m_type, m_func):
     time.sleep(2)
     websocket.enableTrace(True)
@@ -77,14 +81,16 @@ while True:
     if len(dataProcessed) == 2:
         try:
             msgIndex = int(dataProcessed[1])
+            if dataProcessed[0] == "0":
+                ric = defaultRic
+            else:
+                ric = dataProcessed[0]
             if 0 <= msgIndex < len(cannedMsg):
-                sendToUnipager(
-                    dataProcessed[0], cannedMsg[msgIndex], "AlphaNum", "Func3"
-                )
+                sendToUnipager(ric, cannedMsg[msgIndex], "AlphaNum", "Func3")
             elif msgIndex == 99:
-                sendToUnipager(dataProcessed[0], sendSysStatus(), "AlphaNum", "Func3")
+                sendToUnipager(ric, sendSysStatus(), "AlphaNum", "Func3")
             elif msgIndex == 98:
-                sendToUnipager(dataProcessed[0], sendUnipagerStatus(), "AlphaNum", "Func3")
+                sendToUnipager(ric, sendUnipagerStatus(), "AlphaNum", "Func3")
             else:
                 print("Invalid msg index or RIC range")
         except:

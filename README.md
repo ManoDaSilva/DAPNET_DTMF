@@ -1,4 +1,4 @@
-# DAPNET_DTMF
+# Unipager DTMF
 Allows to locally use a Unipager/DAPNET transmitter, through DTMF tones, even without an internet/hamnet connection. 
 
 # System Structure
@@ -9,12 +9,13 @@ A small python script then takes this info and transmits canned messages to unip
 # Features
 You can send messages via DTMF by dialing:
 ```
-#Ric*MessageNr#
+#RIC*MessageNr#
 ```
 You can set up to 90 canned messages. 91 to 99 have been blocked for "special" messages. So far, those have been implemented:
 * 98: Unipager status (server, callsign, connection status)
 * 99: System status (CPU temp, IP Address)
 
+If you enter 0 as a RIC, it will default to a predefined RIC you can set up beforeheand. This is just to avoid typing a long RIC when you're making tests :) 
 
 # Getting started
 
@@ -35,6 +36,7 @@ sudo pip install websocket-client pyserial
 ```
 Edit interface.py and change the serial interface if needed (by default: first USB serial adapter). If you're using directly the GPIO UART, you might need to disable the serial console or others, I haven't looked it up just yet.	
 Edit the canned messages as your heart desires.
+Edit the default RIC (when entering RIC 0 in the DTMF request)
 	
 Start the script, it should now be ready to receive DTMF calls.
 
